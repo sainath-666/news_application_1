@@ -4,20 +4,6 @@ import NewsItem from "./NewsItem";
 export class News extends Component {
   articles = [
     {
-      source: { id: "fox-news", name: "Fox News" },
-      author: "Jackson Thompson",
-      title:
-        "Maine rocked by trans athlete dominance at girls' track meet amid ongoing legal conflict with Trump",
-      description:
-        "A Maine girls' track meet ignited widespread controversy after a trans athlete dominated multiple running events",
-      url: "https://www.foxnews.com/sports/maine-rocked-trans-athlete-dominance-girls-track-meet-amid-ongoing-legal-conflict-trump",
-      urlToImage:
-        "https://static.foxnews.com/foxnews.com/content/uploads/2022/06/ALL_CUSTOM_FS_LOCAL_NEWS_ME_GENERAL.png",
-      publishedAt: "2025-05-04T15:03:34Z",
-      content:
-        "A girls' track meet in Maine became the subject of widespread controversy after a trans athlete dominated multiple running events. The incident took place as the state faces internal and federal pres… [+6157 chars]",
-    },
-    {
       source: { id: "usa-today", name: "USA Today" },
       author: "John Bacon",
       title:
@@ -184,8 +170,9 @@ export class News extends Component {
 
   constructor() {
     super();
+    console.log("Hello I am a constructor from News component");
     this.state = {
-      articles: [],
+      articles: this.articles,
       loading: false,
     };
   }
@@ -194,27 +181,18 @@ export class News extends Component {
       <div className="container my-3">
         <h1 className="text-center">News - Top Headlines</h1>
         <div className="row">
-          <div className="col-md-4">
-            <NewsItem
-              title="Title 1"
-              description="Description 1"
-              imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2025-05/02/17/thumb/VcDLpmiAE.jpg?crop=1245:830;3,0&resize=1250:830"
-             newsUrl="TODO"/>
-          </div>
-          <div className="col-md-4">
-            <NewsItem
-              title="Title 1"
-              description="Description 1"
-              imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2025-05/02/17/thumb/VcDLpmiAE.jpg?crop=1245:830;3,0&resize=1250:830"
-            />
-          </div>
-          <div className="col-md-4">
-            <NewsItem
-              title="Title 1"
-              description="Description 1"
-              imageUrl="https://img.buzzfeed.com/buzzfeed-static/static/2025-05/02/17/thumb/VcDLpmiAE.jpg?crop=1245:830;3,0&resize=1250:830"
-            />
-          </div>
+          {this.state.articles.map((element) => {
+            return (
+              <div className="col-md-4" key={element.url}>
+                <NewsItem
+                  title={element.title.slice(0, 45)}
+                  description={element.description.slice(0, 90)}
+                  imageUrl={element.urlToImage}
+                  newsUrl={element.url}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
     );
